@@ -1,7 +1,7 @@
 ﻿while (true)
 {
     Console.WriteLine("=== Quiz Battle ===");
-    Console.WriteLine("1. Spela111");
+    Console.WriteLine("1. Spela");
     Console.WriteLine("2. Topplista");
     Console.WriteLine("3. Avsluta");
     Console.Write("Val: ");
