@@ -6,18 +6,18 @@
     Console.WriteLine("3. Avsluta");
     Console.Write("Val: ");
 
-    int choice = int.Parse(Console.ReadLine());
+    int MyChoice = int.Parse(Console.ReadLine());
 
-    if (choice == 1)
+    if (MyChoice == 1)
     {
         // LÄGG IN SEN
     }
 
-    else if (choice == 2)
+    else if (MyChoice == 2)
     {
         // LÄGG IN SEN
     }
-    else if (choice == 3)
+    else if (MyChoice == 3)
     {
         break;
     }

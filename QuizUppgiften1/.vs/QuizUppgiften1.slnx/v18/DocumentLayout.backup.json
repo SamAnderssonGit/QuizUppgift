@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Lenovo\\Documents\\Github\\QuizUppgiften\\QuizUppgiften1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{58B2ACFB-7745-4EDD-93D5-5A0D71748E12}|QuizUppgiften1\\QuizUppgiften1.csproj|c:\\users\\lenovo\\documents\\github\\quizuppgiften\\quizuppgiften1\\quizuppgiften1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58B2ACFB-7745-4EDD-93D5-5A0D71748E12}|QuizUppgiften1\\QuizUppgiften1.csproj|solutionrelative:quizuppgiften1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{81677AB1-DB51-5B2C-2E90-391C761C8BA8}|QuizUppgiften1\\QuizUppgiften1.csproj|c:\\users\\lenovo\\documents\\github\\quizuppgiften\\quizuppgiften1\\quizuppgiften1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81677AB1-DB51-5B2C-2E90-391C761C8BA8}|QuizUppgiften1\\QuizUppgiften1.csproj|solutionrelative:quizuppgiften1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -24,7 +24,7 @@
               "RelativeDocumentMoniker": "QuizUppgiften1\\Program.cs",
               "ToolTip": "C:\\Users\\Lenovo\\Documents\\Github\\QuizUppgiften\\QuizUppgiften1\\QuizUppgiften1\\Program.cs",
               "RelativeToolTip": "QuizUppgiften1\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-11-09T12:44:43.378Z",
               "EditorCaption": ""
