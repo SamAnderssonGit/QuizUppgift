@@ -19,6 +19,7 @@
     }
     else if (MyChoice == 3)
     {
+        Console.WriteLine("Exiting program...");
         break;
     }
     else
