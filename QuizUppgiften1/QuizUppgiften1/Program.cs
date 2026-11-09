@@ -1,10 +1,10 @@
 ﻿while (true)
 {
     Console.WriteLine("=== Quiz Battle ===");
-    Console.WriteLine("1. Spela");
-    Console.WriteLine("2. Topplista");
-    Console.WriteLine("3. Avsluta");
-    Console.Write("Val: ");
+    Console.WriteLine("1. Play Game");
+    Console.WriteLine("2. Scoreboard ");
+    Console.WriteLine("3. Exit");
+    Console.Write("Choice: ");
 
     int MyChoice = int.Parse(Console.ReadLine());
 
@@ -23,7 +23,7 @@
     }
     else
     {
-        Console.WriteLine("Ogiltigt val");
+        Console.WriteLine("Invalid choice");
         return;
     }
 }
