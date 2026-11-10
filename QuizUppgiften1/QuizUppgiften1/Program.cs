@@ -1,4 +1,10 @@
-﻿while (true)
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+
+
+while (true)
 {
     Console.WriteLine("=== Quiz Battle ===");
     Console.WriteLine("1. Play Game");
