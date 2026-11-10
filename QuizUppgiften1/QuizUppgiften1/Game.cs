@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿/*
 namespace QuizUppgiften1
 {
     public class Game
@@ -26,3 +23,4 @@ namespace QuizUppgiften1
         
     decimal bonus = decimal.Floor(bet * 1.5m); //Floor gör avrundning till heltal
     player poäng ska bli (score + bonus);
+*/

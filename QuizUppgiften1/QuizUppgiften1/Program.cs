@@ -1,5 +1,10 @@
-﻿while (true)
+﻿using QuizUppgiften1;
+
+while (true)
 {
+    HighScoreManager highScoreManager = new HighScoreManager();
+
+
     Console.WriteLine("=== Quiz Battle ===");
     Console.WriteLine("1. Play Game");
     Console.WriteLine("2. Scoreboard ");
@@ -15,7 +20,7 @@
 
     else if (MyChoice == 2)
     {
-        // LÄGG IN SEN
+        highScoreManager.ShowScoreboard();
     }
     else if (MyChoice == 3)
     {
