@@ -9,10 +9,5 @@ namespace QuizUppgiften1
         public List<string> options { get; set; }
         public int CorrectIndex {  get; set; }
 
-        public override bool CheckAnswer(string answer)
-        {
-            return int.TryParse(answer, out int index)
-                   && index == CorrectIndex;
-        }
     }
 }

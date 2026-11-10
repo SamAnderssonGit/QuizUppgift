@@ -7,19 +7,19 @@ using System.Text.Json.Serialization;
 namespace QuizUppgiften1
 {
    
-    public class Question 
+    public class Question
     {
-        public string name { get; set; }
-        public string type { get; set; }
-        public string text { get; set; }
-        public string difficulty { get; set; }
         
-
-       public bool CheckAnswer(string answer);
-
-        
+        public List<string> Categories { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Text { get; set; }
+        public List<string> Options { get; set; }
+        public int Difficulty { get; set; }
     }
 
+
 }
+
 
 //ALLA subklasser + denna klass måste kollas så props matchar json. + lägg till constructor 

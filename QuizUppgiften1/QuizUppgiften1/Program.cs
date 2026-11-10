@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
+string json = File.ReadAllText("Questions.json");
+
+Console.WriteLine(json);
 
 
 while (true)
