@@ -33,7 +33,7 @@ namespace QuizUppgiften1.Managers
 
         public string GetRoundInfo()
         {
-            return $"Round {CurrentRound} of {TotalRounds}";
+            return $"Runda {CurrentRound} av {TotalRounds}";
         }
     }
 }

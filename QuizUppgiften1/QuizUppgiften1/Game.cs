@@ -19,6 +19,8 @@ namespace QuizUppgiften1
             int totalRounds = GetTotalRounds();
 
             RoundManager roundManager = new RoundManager(totalRounds);
+
+            PlayRounds();
         }
 
 
@@ -87,6 +89,22 @@ namespace QuizUppgiften1
 
             return totalRounds;
         }
+
+        public void PlayRounds()
+        {
+            while (RoundManager.HasMoreRounds())
+            {
+                Console.WriteLine(RoundManager.GetRoundInfo());
+
+                Player currentPlayer = Players[RoundManager.CurrentPlayerIndex];
+
+                Console.WriteLine($"Det är {currentPlayer.Name}s tur!");
+
+                RoundManager.NextPlayer(Players.Count);
+            }
+        }
+
+
     }
 }
 
