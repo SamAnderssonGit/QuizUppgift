@@ -6,10 +6,11 @@ namespace QuizUppgiften1
 {
     public class Game
     {
+        public List<Player> Players { get; set; }
+        public RoundManager RoundManager { get; set; }
 
-    }
 
-public void StartGame()
+        public void StartGame()
         {
             int playerCount = GetPlayerCount();
 
@@ -86,6 +87,8 @@ public void StartGame()
 
             return totalRounds;
         }
+    }
+}
 
 
 /*

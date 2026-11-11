@@ -1,4 +1,8 @@
 ﻿using QuizUppgiften1;
+Game game = new Game();
+
+
+
 
 while (true)
 {
@@ -15,7 +19,7 @@ while (true)
 
     if (MyChoice == 1)
     {
-        
+        game.StartGame();
     }
 
     else if (MyChoice == 2)
