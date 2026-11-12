@@ -19,7 +19,9 @@ while (true)
 
     if (MyChoice == 1)
     {
+
         game.StartGame();
+
     }
 
     else if (MyChoice == 2)
