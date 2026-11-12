@@ -8,17 +8,21 @@ namespace QuizUppgiften1
     {
         public List<Player> Players { get; set; }
         public RoundManager RoundManager { get; set; }
+        public QuestionManager QuestionManager { get; set; }
 
 
         public void StartGame()
         {
             int playerCount = GetPlayerCount();
 
-            List<Player> players = CreatePlayers(playerCount);
+            Players = CreatePlayers(playerCount);
+
+            QuestionManager = new QuestionManager();
+            QuestionManager.LoadQuestions();
 
             int totalRounds = GetTotalRounds();
 
-            RoundManager roundManager = new RoundManager(totalRounds);
+            RoundManager = new RoundManager(totalRounds);
 
             PlayRounds();
         }
@@ -49,15 +53,27 @@ namespace QuizUppgiften1
 
             return players;
         }
-        public void selectedCategory()
+        public string SelectedCategory()
         {
             Console.WriteLine("Välj kategori:");
-            Console.WriteLine("1. Geografi");
-            Console.WriteLine("2. Historia");
-            Console.WriteLine("3. Sport");
-            Console.WriteLine("4. Slumpmässig kategori");
+            Console.WriteLine("1. Programmering");
+            Console.WriteLine("2. Geografi");
+            Console.WriteLine("3. Allmänbildning");
 
-            //if sats sen
+            int choice;
+
+            while (!int.TryParse(Console.ReadLine(), out choice) ||
+                   choice < 1 || choice > 3)
+            {
+                Console.WriteLine("Ogiltigt val. Välj 1-3:");
+            }
+
+            if (choice == 1)
+                return "Programmering";
+            else if (choice == 2)
+                return "Geografi";
+            else
+                return "Allmänbildning";
         }
         public int GetPlayerCount()
         {
@@ -98,13 +114,70 @@ namespace QuizUppgiften1
 
                 Player currentPlayer = Players[RoundManager.CurrentPlayerIndex];
 
-                Console.WriteLine($"Det är {currentPlayer.Name}s tur!");
+                Console.WriteLine($"{currentPlayer.Name}, Det är din tur!");
+
+                string category = SelectedCategory();
+
+                List<Question> categoryQuestions = QuestionManager.FilterCategory(category);
+
+                Question question = QuestionManager.PickRandomQuestion(categoryQuestions);
+
+                bool isCorrect = PlayQuestion(question);
+                if(isCorrect)
+                {
+                    Console.WriteLine("Rätt svar!");
+                }
+                else
+                {
+                    Console.WriteLine("Fel svar!");
+                }
 
                 RoundManager.NextPlayer(Players.Count);
             }
+            Console.WriteLine("================================");
+            Console.WriteLine("SPELET ÄR SLUT!");
+            Console.WriteLine("================================");
         }
 
 
+        public bool PlayQuestion(Question question)
+        {
+            Console.WriteLine(question.Text);
+
+            int answer;
+
+            if (question is QuestionMultipleChoice multipleChoice)
+            {
+                Console.WriteLine("Välj ett svar:");
+
+                for (int i = 0; i < multipleChoice.Options.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {multipleChoice.Options[i]}");
+                }
+
+                while (!int.TryParse(Console.ReadLine(), out answer) ||
+                       answer < 1 || answer > multipleChoice.Options.Count)
+                {
+                    Console.WriteLine("Ogiltigt svar. Försök igen:");
+                }
+                return answer == multipleChoice.CorrectIndex + 1;
+            }
+            else if (question is QuestionTrueFalse trueFalse)
+            {
+                Console.WriteLine("1. Sant");
+                Console.WriteLine("2. Falskt");
+
+                while (!int.TryParse(Console.ReadLine(), out answer) ||
+                       answer < 1 || answer > 2)
+                {
+                    Console.WriteLine("Ogiltigt svar. Ange 1 eller 2:");
+                }
+
+                return (answer == 1) == trueFalse.correct;
+            }
+
+            return false;
+        }
     }
 }
 
@@ -121,13 +194,4 @@ namespace QuizUppgiften1
 
 
         public void ShowResult();
-
-
-        public bool Winstreak(List????);
-
-
-     (playerBlackjack)
-
-    decimal bonus = decimal.Floor(bet * 1.5m); //Floor gör avrundning till heltal
-    player poäng ska bli (score + bonus);
 */
