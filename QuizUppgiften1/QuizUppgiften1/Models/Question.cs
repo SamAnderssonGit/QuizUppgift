@@ -7,14 +7,14 @@ using System.Text.Json.Serialization;
 namespace QuizUppgiften1
 {
    
-    public class Question
+    public abstract class Question
     {
-        
-        public List<string> Categories { get; set; }
+
+        public List<string> Categories { get; set; } = new();
         public string Name { get; set; }
         public string Type { get; set; }
         public string Text { get; set; }
-        public List<string> Options { get; set; }
+        public List<string> Options { get; set; } = new();
         public int Difficulty { get; set; }
     }
 
@@ -22,4 +22,4 @@ namespace QuizUppgiften1
 }
 
 
-//ALLA subklasser + denna klass måste kollas så props matchar json. + lägg till constructor 
+

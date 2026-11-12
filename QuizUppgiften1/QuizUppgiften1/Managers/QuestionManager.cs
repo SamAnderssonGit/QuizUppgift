@@ -1,43 +1,51 @@
-﻿using System.Text.Json;
-
-
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace QuizUppgiften1.Managers
 {
     public class QuestionManager
     {
-        public Question LoadQuestions()
+        private List<Question> questions = new List<Question>();    //gör listan åtkomlig för klassens metoder
+        
+        
+        public List<Question> LoadQuestions()   
         {
-            string json = File.ReadAllText("Data/Questions.json");
-            List<Question> questions = JsonSerializer.Deserialize<List<Question>>(json); //omvandlar Questions.json till objekt.
+            string json = File.ReadAllText("Data/Questions.json");      //läser in json-fil
 
+            questions = JsonSerializer.Deserialize<List<Question>>(json)
+                       ?? new List<Question>();                             //omvandlar json-filens innehåll till objekt.
+
+            return questions;
+        }
+
+        public List<Question> FilterCategory(string selectedCategory)       // filtrerar frågor baserat på vald kategori
+        {
+            return questions
+                .Where(q => q.Categories.Contains(selectedCategory))        
+                .ToList();                                              //ger ny, filtrerad lista
         }
 
 
-  
-
-
-
-
-        public Question FilterCategory(Question questions)
+        public Question PickRandomQuestion(List<Question> categoryQuestions) //väljer slumpmässig fråga + kollar vilka frågor som använts
         {
+            if (categoryQuestions == null || categoryQuestions.Count == 0)
+            {
+                return null;
+            }
 
-            var selectedCategor
-            questions.Where(q => q.Categories == selectedCategory)
-            .ToList(); //detta är nog listan som ska skickas till metoden PickRandom Question.
-
-        }
-
-        public void PickRandomQuestion(questions)
-        { 
             Random random = new Random();
 
             int index = random.Next(categoryQuestions.Count);
 
-            Question selectedQuestion = questions.Categories[index];
+            Question selectedQuestion = categoryQuestions[index];
 
-            questions.Remove(selectedQuestion);
+            categoryQuestions.RemoveAt(index);      //tar bort använda frågor. 
 
+            return selectedQuestion;
         }
 
 
