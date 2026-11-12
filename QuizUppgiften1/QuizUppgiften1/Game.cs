@@ -117,16 +117,17 @@ namespace QuizUppgiften1
     
 
 
-    public void PlayGame()
+        public void PlayGame();
 
 
-    public void ShowResult()
+        public void ShowResult();
 
 
-    public bool Winstreak(List????)
-        
+        public bool Winstreak(List????);
+
+
      (playerBlackjack)
-        
+
     decimal bonus = decimal.Floor(bet * 1.5m); //Floor gör avrundning till heltal
     player poäng ska bli (score + bonus);
 */
