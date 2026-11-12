@@ -1,4 +1,8 @@
 ﻿using QuizUppgiften1;
+Game game = new Game();
+
+
+
 
 while (true)
 {
@@ -6,17 +10,18 @@ while (true)
 
 
     Console.WriteLine("=== Quiz Battle ===");
-    Console.WriteLine("1. Play Game");
-    Console.WriteLine("2. Scoreboard ");
-    Console.WriteLine("3. Exit");
-    Console.Write("Choice: ");
+    Console.WriteLine("1. Spela");
+    Console.WriteLine("2. Poängtavla ");
+    Console.WriteLine("3. Avsluta");
+    Console.Write("Val: ");
 
     int MyChoice = int.Parse(Console.ReadLine());
 
     if (MyChoice == 1)
     {
-        // LÄGG IN SEN
-       
+
+        game.StartGame();
+
     }
 
     else if (MyChoice == 2)
@@ -25,12 +30,12 @@ while (true)
     }
     else if (MyChoice == 3)
     {
-        Console.WriteLine("Exiting program...");
+        Console.WriteLine("Avslutar programmet...");
         break;
     }
     else
     {
-        Console.WriteLine("Invalid choice");
+        Console.WriteLine("Felaktig inmatning, välj 1-3");
         return;
     }
 }

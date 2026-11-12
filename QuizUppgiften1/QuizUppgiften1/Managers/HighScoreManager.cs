@@ -23,7 +23,7 @@ namespace QuizUppgiften1
 
             foreach (HighScore score in scores)
             {
-                Console.WriteLine($"{score.Name}: {score.Score} points");
+                Console.WriteLine($"{score.Name}: {score.Score} poäng");
             }
         }
 
