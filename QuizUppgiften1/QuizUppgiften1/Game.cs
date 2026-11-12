@@ -8,6 +8,7 @@ namespace QuizUppgiften1
     {
         public List<Player> Players { get; set; }
         public RoundManager RoundManager { get; set; }
+        public QuestionManager QuestionManager { get; set; }
 
 
         public void StartGame()
@@ -15,6 +16,9 @@ namespace QuizUppgiften1
             int playerCount = GetPlayerCount();
 
             Players = CreatePlayers(playerCount);
+
+            QuestionManager = new QuestionManager();
+            QuestionManager.LoadQuestions();
 
             int totalRounds = GetTotalRounds();
 
@@ -100,13 +104,22 @@ namespace QuizUppgiften1
 
                 Console.WriteLine($"Det är {currentPlayer.Name}s tur!");
 
+                List<Question> categoryQuestions = QuestionManager.FilterCategory("Programmering");
+
+                Question question = QuestionManager.PickRandomQuestion(categoryQuestions);
+
+                PlayQuestion(question);
+
                 RoundManager.NextPlayer(Players.Count);
             }
         }
 
+
         public void PlayQuestion(Question question)
         {
             Console.WriteLine(question.Text);
+
+            int answer;
 
             if (question is QuestionMultipleChoice multipleChoice)
             {
@@ -116,15 +129,25 @@ namespace QuizUppgiften1
                 {
                     Console.WriteLine($"{i + 1}. {multipleChoice.Options[i]}");
                 }
+
+                while (!int.TryParse(Console.ReadLine(), out answer) ||
+                       answer < 1 || answer > multipleChoice.Options.Count)
+                {
+                    Console.WriteLine("Ogiltigt svar. Försök igen:");
+                }
             }
             else if (question is QuestionTrueFalse)
             {
                 Console.WriteLine("1. Sant");
                 Console.WriteLine("2. Falskt");
+
+                while (!int.TryParse(Console.ReadLine(), out answer) ||
+                       answer < 1 || answer > 2)
+                {
+                    Console.WriteLine("Ogiltigt svar. Ange 1 eller 2:");
+                }
             }
         }
-
-
     }
 }
 

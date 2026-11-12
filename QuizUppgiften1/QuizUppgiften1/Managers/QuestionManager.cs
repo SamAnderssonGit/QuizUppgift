@@ -1,32 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace QuizUppgiften1.Managers
 {
     public class QuestionManager
     {
         private List<Question> questions = new List<Question>();    //gör listan åtkomlig för klassens metoder
-        
-        
-        public List<Question> LoadQuestions()   
-        {
-            string json = File.ReadAllText("Data/Questions.json");      //läser in json-fil
 
-            questions = JsonSerializer.Deserialize<List<Question>>(json)
-                       ?? new List<Question>();                             //omvandlar json-filens innehåll till objekt.
+
+        public List<Question> LoadQuestions()
+        {
+            string json = File.ReadAllText("Data/Questions.json");
+            JsonSerializerOptions options = new()
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            using JsonDocument document = JsonDocument.Parse(json);
+
+            foreach (JsonElement category in document.RootElement.GetProperty("categories").EnumerateArray())
+            {
+                string categoryName = category.GetProperty("name").GetString();
+                foreach (JsonElement question in category.GetProperty("questions").EnumerateArray())
+                {
+                    string type = question.GetProperty("type").GetString();
+                    Question newQuestion = null;
+
+                    if (type == "multipleChoice")
+                    {
+                        newQuestion = JsonSerializer.Deserialize<QuestionMultipleChoice>(question.GetRawText(), options);
+                    }
+                    else if (type == "trueFalse")
+                    {
+                        newQuestion = JsonSerializer.Deserialize<QuestionTrueFalse>(question.GetRawText(), options);
+                    }
+
+                    if (newQuestion != null)
+                    {
+                        newQuestion.Category = categoryName;
+                        questions.Add(newQuestion);
+                    }
+                }
+            }
 
             return questions;
         }
 
-        public List<Question> FilterCategory(string selectedCategory)       // filtrerar frågor baserat på vald kategori
+        public List<Question> FilterCategory(string selectedCategory)
         {
             return questions
-                .Where(q => q.Categories.Contains(selectedCategory))        
-                .ToList();                                              //ger ny, filtrerad lista
+                .Where(q => q.Category == selectedCategory)
+                .ToList();
         }
 
 
@@ -42,6 +68,7 @@ namespace QuizUppgiften1.Managers
             int index = random.Next(categoryQuestions.Count);
 
             Question selectedQuestion = categoryQuestions[index];
+            questions.Remove(selectedQuestion);
 
             categoryQuestions.RemoveAt(index);      //tar bort använda frågor. 
 
