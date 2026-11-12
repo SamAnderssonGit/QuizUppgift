@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json;
-
+﻿using QuizUppgiften1;
 
 while (true)
 {
+    HighScoreManager highScoreManager = new HighScoreManager();
+
+
     Console.WriteLine("=== Quiz Battle ===");
     Console.WriteLine("1. Play Game");
     Console.WriteLine("2. Scoreboard ");
@@ -22,7 +21,7 @@ while (true)
 
     else if (MyChoice == 2)
     {
-        // LÄGG IN SEN
+        highScoreManager.ShowScoreboard();
     }
     else if (MyChoice == 3)
     {
