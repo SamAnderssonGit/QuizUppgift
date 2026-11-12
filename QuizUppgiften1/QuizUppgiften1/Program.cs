@@ -16,6 +16,7 @@ while (true)
     if (MyChoice == 1)
     {
         // LÄGG IN SEN
+       
     }
 
     else if (MyChoice == 2)
