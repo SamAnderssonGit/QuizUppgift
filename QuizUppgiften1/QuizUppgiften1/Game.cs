@@ -14,11 +14,11 @@ namespace QuizUppgiften1
         {
             int playerCount = GetPlayerCount();
 
-            List<Player> players = CreatePlayers(playerCount);
+            Players = CreatePlayers(playerCount);
 
             int totalRounds = GetTotalRounds();
 
-            RoundManager roundManager = new RoundManager(totalRounds);
+            RoundManager = new RoundManager(totalRounds);
 
             PlayRounds();
         }
@@ -104,6 +104,26 @@ namespace QuizUppgiften1
             }
         }
 
+        public void PlayQuestion(Question question)
+        {
+            Console.WriteLine(question.Text);
+
+            if (question is QuestionMultipleChoice multipleChoice)
+            {
+                Console.WriteLine("Välj ett svar:");
+
+                for (int i = 0; i < multipleChoice.Options.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {multipleChoice.Options[i]}");
+                }
+            }
+            else if (question is QuestionTrueFalse)
+            {
+                Console.WriteLine("1. Sant");
+                Console.WriteLine("2. Falskt");
+            }
+        }
+
 
     }
 }
@@ -121,13 +141,4 @@ namespace QuizUppgiften1
 
 
         public void ShowResult();
-
-
-        public bool Winstreak(List????);
-
-
-     (playerBlackjack)
-
-    decimal bonus = decimal.Floor(bet * 1.5m); //Floor gör avrundning till heltal
-    player poäng ska bli (score + bonus);
 */
