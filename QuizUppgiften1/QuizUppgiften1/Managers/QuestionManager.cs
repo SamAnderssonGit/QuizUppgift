@@ -52,7 +52,7 @@ namespace QuizUppgiften1.Managers
         {
             return questions
                 .Where(q => q.Category == selectedCategory)
-                .ToList();
+                .ToList();      //variabel för ny, filtrerad lista ses i metodanrop, Game-classen.
         }
 
 

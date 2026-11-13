@@ -118,7 +118,7 @@ namespace QuizUppgiften1
 
                 string category = SelectedCategory();
 
-                List<Question> categoryQuestions = QuestionManager.FilterCategory(category);
+                List<Question> categoryQuestions = QuestionManager.FilterCategory(category); //anropar FilterCategory-metod + ger variabel till LINQ-filtrerad lista.
 
                 Question question = QuestionManager.PickRandomQuestion(categoryQuestions);
 
