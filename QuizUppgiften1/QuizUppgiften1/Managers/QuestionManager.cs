@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using QuizUppgiften1.Models;
 
 namespace QuizUppgiften1.Managers
 {
@@ -25,17 +26,7 @@ namespace QuizUppgiften1.Managers
                 string categoryName = category.GetProperty("name").GetString();
                 foreach (JsonElement question in category.GetProperty("questions").EnumerateArray())
                 {
-                    string type = question.GetProperty("type").GetString();
-                    Question newQuestion = null;
-
-                    if (type == "multipleChoice")
-                    {
-                        newQuestion = JsonSerializer.Deserialize<QuestionMultipleChoice>(question.GetRawText(), options);
-                    }
-                    else if (type == "trueFalse")
-                    {
-                        newQuestion = JsonSerializer.Deserialize<QuestionTrueFalse>(question.GetRawText(), options);
-                    }
+                    Question newQuestion = question.Deserialize<Question>(options); //frågan görs av rätt subklass utan if/else pga JsonPolymorphic
 
                     if (newQuestion != null)
                     {
@@ -51,10 +42,9 @@ namespace QuizUppgiften1.Managers
         public List<Question> FilterCategory(string selectedCategory)
         {
             return questions
-                .Where(q => q.Category == selectedCategory)
-                .ToList();      //variabel för ny, filtrerad lista ses i metodanrop, Game-classen.
+                .Where(q => q.Category == selectedCategory) //selectedCategory är identifier för LINQ-filtrerad lista, skapas vid metodanrop i Game-classen.
+                .ToList();      
         }
-
 
         public Question PickRandomQuestion(List<Question> categoryQuestions) //väljer slumpmässig fråga + kollar vilka frågor som använts
         {
@@ -68,13 +58,11 @@ namespace QuizUppgiften1.Managers
             int index = random.Next(categoryQuestions.Count);
 
             Question selectedQuestion = categoryQuestions[index];
-            questions.Remove(selectedQuestion);
+            questions.Remove(selectedQuestion);     //tar bort använd fråga från huvudlista.
 
-            categoryQuestions.RemoveAt(index);      //tar bort använda frågor. 
+            categoryQuestions.RemoveAt(index);      //tar bort använda frågor från aktuell spelomgång.
 
             return selectedQuestion;
         }
-
-
     }
 }

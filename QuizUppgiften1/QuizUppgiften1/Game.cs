@@ -123,7 +123,7 @@ namespace QuizUppgiften1
                 Question question = QuestionManager.PickRandomQuestion(categoryQuestions);
 
                 bool isCorrect = PlayQuestion(question);
-                if(isCorrect)
+                if (isCorrect)
                 {
                     Console.WriteLine("Rätt svar!");
                 }
@@ -139,59 +139,27 @@ namespace QuizUppgiften1
             Console.WriteLine("================================");
         }
 
-
-        public bool PlayQuestion(Question question)
+        public bool PlayQuestion(IQuestion question)
         {
             Console.WriteLine(question.Text);
+            Console.WriteLine("Välj ett svar:");
+
+            List<string> options = question.GetOptions();
+
+            for (int i = 0; i < options.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {options[i]}");
+            }
 
             int answer;
-
-            if (question is QuestionMultipleChoice multipleChoice)
+            while (!int.TryParse(Console.ReadLine(), out answer) ||
+                   answer < 1 || answer > options.Count)
             {
-                Console.WriteLine("Välj ett svar:");
-
-                for (int i = 0; i < multipleChoice.Options.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {multipleChoice.Options[i]}");
-                }
-
-                while (!int.TryParse(Console.ReadLine(), out answer) ||
-                       answer < 1 || answer > multipleChoice.Options.Count)
-                {
-                    Console.WriteLine("Ogiltigt svar. Försök igen:");
-                }
-                return answer == multipleChoice.CorrectIndex + 1;
-            }
-            else if (question is QuestionTrueFalse trueFalse)
-            {
-                Console.WriteLine("1. Sant");
-                Console.WriteLine("2. Falskt");
-
-                while (!int.TryParse(Console.ReadLine(), out answer) ||
-                       answer < 1 || answer > 2)
-                {
-                    Console.WriteLine("Ogiltigt svar. Ange 1 eller 2:");
-                }
-
-                return (answer == 1) == trueFalse.correct;
+                Console.WriteLine($"Ogiltigt svar. Ange en siffra mellan 1 och {options.Count}:");
             }
 
-            return false;
+            return question.IsCorrect(answer);
         }
     }
 }
 
-
-/*
-
-
-
-
-    
-
-
-        public void PlayGame();
-
-
-        public void ShowResult();
-*/
