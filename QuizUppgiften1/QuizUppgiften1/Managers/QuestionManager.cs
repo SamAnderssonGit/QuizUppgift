@@ -43,7 +43,7 @@ namespace QuizUppgiften1.Managers
         {
             return questions
                 .Where(q => q.Category == selectedCategory) //selectedCategory är identifier för LINQ-filtrerad lista, skapas vid metodanrop i Game-classen.
-                .ToList();      
+                .ToList();
         }
 
         public Question PickRandomQuestion(List<Question> categoryQuestions) //väljer slumpmässig fråga + kollar vilka frågor som använts
@@ -64,5 +64,28 @@ namespace QuizUppgiften1.Managers
 
             return selectedQuestion;
         }
+        public void ShowRemainingQuestions() //Räknar frågor kvar i varje kategori
+        {
+            Console.WriteLine($"Programmering: ({FilterCategory("Programmering").Count} frågor kvar)");
+            Console.WriteLine($"Geografi: ({FilterCategory("Geografi").Count} frågor kvar)");
+            Console.WriteLine($"Allmänbildning: ({FilterCategory("Allmänbildning").Count} frågor kvar)");
+        }
+
+        public List<string> AvailableCategories()
+        {
+            List<string> categories = new List<string>();
+
+            if (FilterCategory("Programmering").Count > 0)
+                categories.Add("Programmering");
+
+            if (FilterCategory("Geografi").Count > 0)
+                categories.Add("Geografi");
+
+            if (FilterCategory("Allmänbildning").Count > 0)
+                categories.Add("Allmänbildning");
+
+            return categories;
+        }
+
     }
 }

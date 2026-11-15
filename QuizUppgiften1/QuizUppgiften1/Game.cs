@@ -9,6 +9,7 @@ namespace QuizUppgiften1
         public List<Player> Players { get; set; }
         public RoundManager RoundManager { get; set; }
         public QuestionManager QuestionManager { get; set; }
+        public ScoreManager ScoreManager { get; set; }
 
 
         public void StartGame()
@@ -16,6 +17,7 @@ namespace QuizUppgiften1
             int playerCount = GetPlayerCount();
 
             Players = CreatePlayers(playerCount);
+            ScoreManager = new ScoreManager();
 
             QuestionManager = new QuestionManager();
             QuestionManager.LoadQuestions();
@@ -59,21 +61,33 @@ namespace QuizUppgiften1
             Console.WriteLine("1. Programmering");
             Console.WriteLine("2. Geografi");
             Console.WriteLine("3. Allmänbildning");
+            Console.WriteLine("4. Slumpa");
 
             int choice;
 
             while (!int.TryParse(Console.ReadLine(), out choice) ||
-                   choice < 1 || choice > 3)
+                   choice < 1 || choice > 4)
             {
-                Console.WriteLine("Ogiltigt val. Välj 1-3:");
+                Console.WriteLine("Ogiltigt val. Välj 1-4:");
             }
 
             if (choice == 1)
                 return "Programmering";
             else if (choice == 2)
                 return "Geografi";
-            else
+            else if (choice == 3)
                 return "Allmänbildning";
+            else
+            {
+                int randomCategory = Random.Shared.Next(1, 4); //Slumpar val 1-3
+
+                if (randomCategory == 1)
+                    return "Programmering";
+                else if (randomCategory == 2)
+                    return "Geografi";
+                else
+                    return "Allmänbildning";
+            }
         }
         public int GetPlayerCount()
         {
@@ -110,11 +124,18 @@ namespace QuizUppgiften1
         {
             while (RoundManager.HasMoreRounds())
             {
+                if (QuestionManager.AvailableCategories().Count == 0)
+                {
+                    Console.WriteLine("Alla frågor är slut! Spelet avslutas...");
+                    break;
+                }
                 Console.WriteLine(RoundManager.GetRoundInfo());
 
                 Player currentPlayer = Players[RoundManager.CurrentPlayerIndex];
 
-                Console.WriteLine($"{currentPlayer.Name}, Det är din tur!");
+                Console.WriteLine($"Din tur: {currentPlayer.Name}");
+
+                QuestionManager.ShowRemainingQuestions();
 
                 string category = SelectedCategory();
 
@@ -122,27 +143,70 @@ namespace QuizUppgiften1
 
                 Question question = QuestionManager.PickRandomQuestion(categoryQuestions);
 
+                while (question == null) //Stoppar programmet från krasch ifall alla frågor redan blivit användna
+                {
+                    Console.WriteLine("Frågorna är slut i denna kategori... välj ett annat ämne");
+                    category = SelectedCategory();
+                    categoryQuestions = QuestionManager.FilterCategory(category);
+
+                    question = QuestionManager.PickRandomQuestion(categoryQuestions);
+                }
+
                 bool isCorrect = PlayQuestion(question);
+
                 if (isCorrect)
                 {
-                    Console.WriteLine("Rätt svar!");
+                    Console.WriteLine($"{currentPlayer.Name}, svarade RÄTT");
                 }
                 else
                 {
-                    Console.WriteLine("Fel svar!");
+                    Console.WriteLine($"{currentPlayer.Name}, svarade FEL");
+                    Console.WriteLine($"Rätt svar var: {question.GetCorrectAnswer()}");
                 }
+                int points = ScoreManager.RegisterAnswer(currentPlayer, isCorrect, question.Difficulty);
+
+                Console.WriteLine($"{currentPlayer.Name}, fick {points} poäng!");
+                Console.WriteLine($"{currentPlayer.Name}s Totalpoäng: {currentPlayer.Score}");
 
                 RoundManager.NextPlayer(Players.Count);
+
             }
-            Console.WriteLine("================================");
-            Console.WriteLine("SPELET ÄR SLUT!");
-            Console.WriteLine("================================");
+            Console.WriteLine("=========== SPELET ÄR SLUT =============");
+            Console.WriteLine("===========   RESULTAT  ================");
+            foreach (Player player in Players)
+            {
+                Console.WriteLine($"{player.Name}: {player.Score} poäng");
+            }
+            Console.WriteLine("========================================");
+
+          
         }
 
         public bool PlayQuestion(IQuestion question)
         {
+            if (question is Question myQuestion)
+            {
+                Console.WriteLine($"Kategori: {myQuestion.Category}");
+                if (myQuestion.Difficulty == "easy")
+                {
+                    Console.WriteLine("Nivå: Lätt");
+                    Console.WriteLine("Poäng: 10");
+                }
+                else if (myQuestion.Difficulty == "medium")
+                {
+                    Console.WriteLine("Nivå: Medel");
+                    Console.WriteLine("Poäng: 20");
+                }
+                else if (myQuestion.Difficulty == "hard")
+                {
+                    Console.WriteLine("Nivå: Svårt");
+                    Console.WriteLine("Poäng: 30");
+                }
+            }
+
+
             Console.WriteLine(question.Text);
-            Console.WriteLine("Välj ett svar:");
+            Console.WriteLine($"Välj ett svar: ");
 
             List<string> options = question.GetOptions();
 
@@ -152,6 +216,7 @@ namespace QuizUppgiften1
             }
 
             int answer;
+            Console.Write($"Ditt svar (1-{options.Count}): ");
             while (!int.TryParse(Console.ReadLine(), out answer) ||
                    answer < 1 || answer > options.Count)
             {

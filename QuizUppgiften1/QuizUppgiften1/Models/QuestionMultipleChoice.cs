@@ -18,6 +18,11 @@ namespace QuizUppgiften1
             {
                 return answerNumber == CorrectIndex + 1;
             }
+
+        public override string GetCorrectAnswer()
+        {
+            return Options[CorrectIndex];
         }
+    }
     
 }

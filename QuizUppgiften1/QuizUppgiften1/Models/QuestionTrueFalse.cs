@@ -17,5 +17,10 @@ namespace QuizUppgiften1.Models
         {
             return (answerNumber == 1) == correct;
         }
+
+        public override string GetCorrectAnswer()
+        {
+            return correct ? "Sant" : "Falskt";
+        }
     }
 }
