@@ -122,6 +122,15 @@ namespace QuizUppgiften1
 
                 Question question = QuestionManager.PickRandomQuestion(categoryQuestions);
 
+                while (question == null)
+                {
+                    Console.WriteLine("Frågorna är slut i denna kategori... välj ett annat ämne");
+                    category = SelectedCategory();
+                    categoryQuestions = QuestionManager.FilterCategory(category);
+
+                    question = QuestionManager.PickRandomQuestion(categoryQuestions);
+                }
+
                 bool isCorrect = PlayQuestion(question);
                 if (isCorrect)
                 {
