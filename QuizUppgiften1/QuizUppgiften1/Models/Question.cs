@@ -17,6 +17,10 @@ namespace QuizUppgiften1
         
             public abstract List<string> GetOptions();
             public abstract bool IsCorrect(int answerNumber);
+        public virtual string GetCorrectAnswer()
+        {
+            return "";
+        }
     }
 }
 

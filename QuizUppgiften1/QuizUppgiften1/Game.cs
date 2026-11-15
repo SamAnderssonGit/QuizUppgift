@@ -9,6 +9,7 @@ namespace QuizUppgiften1
         public List<Player> Players { get; set; }
         public RoundManager RoundManager { get; set; }
         public QuestionManager QuestionManager { get; set; }
+        public ScoreManager ScoreManager { get; set; }
 
 
         public void StartGame()
@@ -16,6 +17,7 @@ namespace QuizUppgiften1
             int playerCount = GetPlayerCount();
 
             Players = CreatePlayers(playerCount);
+            ScoreManager = new ScoreManager();
 
             QuestionManager = new QuestionManager();
             QuestionManager.LoadQuestions();
@@ -122,11 +124,18 @@ namespace QuizUppgiften1
         {
             while (RoundManager.HasMoreRounds())
             {
+                if (QuestionManager.AvailableCategories().Count == 0)
+                {
+                    Console.WriteLine("Alla frågor är slut! Spelet avslutas...");
+                    break;
+                }
                 Console.WriteLine(RoundManager.GetRoundInfo());
 
                 Player currentPlayer = Players[RoundManager.CurrentPlayerIndex];
 
                 Console.WriteLine($"{currentPlayer.Name}, Det är din tur!");
+
+                QuestionManager.ShowRemainingQuestions();
 
                 string category = SelectedCategory();
 
@@ -144,20 +153,33 @@ namespace QuizUppgiften1
                 }
 
                 bool isCorrect = PlayQuestion(question);
+
                 if (isCorrect)
                 {
-                    Console.WriteLine($"{currentPlayer.Name}, Svarade RÄTT");
+                    Console.WriteLine($"{currentPlayer.Name}, svarade RÄTT");
                 }
                 else
                 {
-                    Console.WriteLine($"{currentPlayer.Name}, Svarade FEL");
+                    Console.WriteLine($"{currentPlayer.Name}, svarade FEL");
+                    Console.WriteLine($"Rätt svar var: {question.GetCorrectAnswer()}");
                 }
+                int points = ScoreManager.RegisterAnswer(currentPlayer, isCorrect, question.Difficulty);
+
+                Console.WriteLine($"{currentPlayer.Name}, fick {points} poäng!");
+                Console.WriteLine($"Totalpoäng: {currentPlayer.Score}");
 
                 RoundManager.NextPlayer(Players.Count);
+
+            }
+            Console.WriteLine("=========== SPELET ÄR SLUT ============");
+            Console.WriteLine("===========   RESULTAT  ================");
+            foreach (Player player in Players)
+            {
+                Console.WriteLine($"{player.Name}: {player.Score} poäng");
             }
             Console.WriteLine("================================");
-            Console.WriteLine("SPELET ÄR SLUT!");
-            Console.WriteLine("================================");
+
+          
         }
 
         public bool PlayQuestion(IQuestion question)
