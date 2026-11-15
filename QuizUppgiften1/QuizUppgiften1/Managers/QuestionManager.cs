@@ -66,9 +66,9 @@ namespace QuizUppgiften1.Managers
         }
         public void ShowRemainingQuestions() //Räknar frågor kvar i varje kategori
         {
-            Console.WriteLine($"Programmering: ({FilterCategory("Programmering").Count})");
-            Console.WriteLine($"Geografi: ({FilterCategory("Geografi").Count})");
-            Console.WriteLine($"Allmänbildning: ({FilterCategory("Allmänbildning").Count})");
+            Console.WriteLine($"Programmering: ({FilterCategory("Programmering").Count} frågor kvar)");
+            Console.WriteLine($"Geografi: ({FilterCategory("Geografi").Count} frågor kvar)");
+            Console.WriteLine($"Allmänbildning: ({FilterCategory("Allmänbildning").Count} frågor kvar)");
         }
 
         public List<string> AvailableCategories()

@@ -133,7 +133,7 @@ namespace QuizUppgiften1
 
                 Player currentPlayer = Players[RoundManager.CurrentPlayerIndex];
 
-                Console.WriteLine($"{currentPlayer.Name}, Det är din tur!");
+                Console.WriteLine($"Din tur: {currentPlayer.Name}");
 
                 QuestionManager.ShowRemainingQuestions();
 
@@ -166,18 +166,18 @@ namespace QuizUppgiften1
                 int points = ScoreManager.RegisterAnswer(currentPlayer, isCorrect, question.Difficulty);
 
                 Console.WriteLine($"{currentPlayer.Name}, fick {points} poäng!");
-                Console.WriteLine($"Totalpoäng: {currentPlayer.Score}");
+                Console.WriteLine($"{currentPlayer.Name}s Totalpoäng: {currentPlayer.Score}");
 
                 RoundManager.NextPlayer(Players.Count);
 
             }
-            Console.WriteLine("=========== SPELET ÄR SLUT ============");
+            Console.WriteLine("=========== SPELET ÄR SLUT =============");
             Console.WriteLine("===========   RESULTAT  ================");
             foreach (Player player in Players)
             {
                 Console.WriteLine($"{player.Name}: {player.Score} poäng");
             }
-            Console.WriteLine("================================");
+            Console.WriteLine("========================================");
 
           
         }
@@ -189,24 +189,24 @@ namespace QuizUppgiften1
                 Console.WriteLine($"Kategori: {myQuestion.Category}");
                 if (myQuestion.Difficulty == "easy")
                 {
-                    Console.WriteLine("Nivå: Easy");
+                    Console.WriteLine("Nivå: Lätt");
                     Console.WriteLine("Poäng: 10");
                 }
                 else if (myQuestion.Difficulty == "medium")
                 {
-                    Console.WriteLine("Nivå: Medium");
+                    Console.WriteLine("Nivå: Medel");
                     Console.WriteLine("Poäng: 20");
                 }
                 else if (myQuestion.Difficulty == "hard")
                 {
-                    Console.WriteLine("Nivå: Hard");
+                    Console.WriteLine("Nivå: Svårt");
                     Console.WriteLine("Poäng: 30");
                 }
             }
 
 
             Console.WriteLine(question.Text);
-            Console.WriteLine("Välj ett svar:");
+            Console.WriteLine($"Välj ett svar: ");
 
             List<string> options = question.GetOptions();
 
@@ -216,6 +216,7 @@ namespace QuizUppgiften1
             }
 
             int answer;
+            Console.Write($"Ditt svar (1-{options.Count}): ");
             while (!int.TryParse(Console.ReadLine(), out answer) ||
                    answer < 1 || answer > options.Count)
             {
