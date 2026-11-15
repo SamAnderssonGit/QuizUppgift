@@ -59,21 +59,33 @@ namespace QuizUppgiften1
             Console.WriteLine("1. Programmering");
             Console.WriteLine("2. Geografi");
             Console.WriteLine("3. Allmänbildning");
+            Console.WriteLine("4. Slumpa");
 
             int choice;
 
             while (!int.TryParse(Console.ReadLine(), out choice) ||
-                   choice < 1 || choice > 3)
+                   choice < 1 || choice > 4)
             {
-                Console.WriteLine("Ogiltigt val. Välj 1-3:");
+                Console.WriteLine("Ogiltigt val. Välj 1-4:");
             }
 
             if (choice == 1)
                 return "Programmering";
             else if (choice == 2)
                 return "Geografi";
-            else
+            else if (choice == 3)
                 return "Allmänbildning";
+            else
+            {
+                int randomCategory = Random.Shared.Next(1, 4); //Slumpar val 1-3
+
+                if (randomCategory == 1)
+                    return "Programmering";
+                else if (randomCategory == 2)
+                    return "Geografi";
+                else
+                    return "Allmänbildning";
+            }
         }
         public int GetPlayerCount()
         {
@@ -122,7 +134,7 @@ namespace QuizUppgiften1
 
                 Question question = QuestionManager.PickRandomQuestion(categoryQuestions);
 
-                while (question == null)
+                while (question == null) //Stoppar programmet från krasch ifall alla frågor redan blivit användna
                 {
                     Console.WriteLine("Frågorna är slut i denna kategori... välj ett annat ämne");
                     category = SelectedCategory();
@@ -134,11 +146,11 @@ namespace QuizUppgiften1
                 bool isCorrect = PlayQuestion(question);
                 if (isCorrect)
                 {
-                    Console.WriteLine("Rätt svar!");
+                    Console.WriteLine($"{currentPlayer.Name}, Svarade RÄTT");
                 }
                 else
                 {
-                    Console.WriteLine("Fel svar!");
+                    Console.WriteLine($"{currentPlayer.Name}, Svarade FEL");
                 }
 
                 RoundManager.NextPlayer(Players.Count);
@@ -150,6 +162,27 @@ namespace QuizUppgiften1
 
         public bool PlayQuestion(IQuestion question)
         {
+            if (question is Question myQuestion)
+            {
+                Console.WriteLine($"Kategori: {myQuestion.Category}");
+                if (myQuestion.Difficulty == "easy")
+                {
+                    Console.WriteLine("Nivå: Easy");
+                    Console.WriteLine("Poäng: 10");
+                }
+                else if (myQuestion.Difficulty == "medium")
+                {
+                    Console.WriteLine("Nivå: Medium");
+                    Console.WriteLine("Poäng: 20");
+                }
+                else if (myQuestion.Difficulty == "hard")
+                {
+                    Console.WriteLine("Nivå: Hard");
+                    Console.WriteLine("Poäng: 30");
+                }
+            }
+
+
             Console.WriteLine(question.Text);
             Console.WriteLine("Välj ett svar:");
 
