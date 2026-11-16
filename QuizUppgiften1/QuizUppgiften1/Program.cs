@@ -1,9 +1,10 @@
 ﻿using QuizUppgiften1;
+using QuizUppgiften1.Managers;
 Game game = new Game();
 
 while (true)
 {
-    HighScoreManager highScoreManager = new HighScoreManager();
+    LeaderboardManager leaderboard = new();
 
     Console.WriteLine("===== Quiz Battle =====");
     Console.WriteLine("1. Spela");
@@ -26,7 +27,7 @@ while (true)
     }
     else if (MyChoice == 2)
     {
-        highScoreManager.ShowScoreboard();
+        leaderboard.ShowLeaderboard();
     }
     else if (MyChoice == 3)
     {

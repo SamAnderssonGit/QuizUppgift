@@ -10,6 +10,7 @@ namespace QuizUppgiften1
         public RoundManager RoundManager { get; set; }
         public QuestionManager QuestionManager { get; set; }
         public ScoreManager ScoreManager { get; set; }
+        public LeaderboardManager LeaderboardManager { get; set; }
 
 
         public void StartGame()
@@ -18,6 +19,7 @@ namespace QuizUppgiften1
 
             Players = CreatePlayers(playerCount);
             ScoreManager = new ScoreManager();
+            LeaderboardManager = new LeaderboardManager();
 
             QuestionManager = new QuestionManager();
             QuestionManager.LoadQuestions();
@@ -179,7 +181,13 @@ namespace QuizUppgiften1
             }
             Console.WriteLine("========================================");
 
-          
+            foreach (Player player in Players)
+            {
+                LeaderboardManager.SaveResult(player);
+            }
+
+            Console.WriteLine("Resultaten har sparats på topplistan!");
+
         }
 
         public bool PlayQuestion(IQuestion question)
