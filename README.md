@@ -12,7 +12,7 @@ Frågespel i konsollapplikation
 - Tidlös grafik med högkontrasttema :)
 - Helt gratis, utan reklam. Endast inmatning av spelarnamn krävs - ingen krånglig hantering av personuppgifter eller användarkonto.
 
-## Installation, kör programmet lokalt.
+## Installation, kör programmet lokalt
 - Klona GitHub-repositoriet till din lokala dator. Öppna projektets solution och kör koden via kodeditorn. 
 
 ## Tech stack
