@@ -30,7 +30,10 @@ namespace QuizUppgiften1.Managers
 
             // Räkna ut totala poäng
             int totalPoints = points + bonus;
-
+            if (bonus > 0)
+            {
+                Console.WriteLine($"{player.Name}s, Streakbonus: +{bonus} poäng");
+            }
             // Uppdatera spelarens poäng
             player.Score += totalPoints;
 

@@ -17,7 +17,7 @@ while (true)
     if (!int.TryParse(Console.ReadLine(), out MyChoice) ||
         MyChoice < 1 || MyChoice > 3)
     {
-        Console.WriteLine("Felaktig inmatning, välj 1-3");
+        Console.WriteLine("Ogiltigt val, välj 1-3");
         continue;
     }
 
