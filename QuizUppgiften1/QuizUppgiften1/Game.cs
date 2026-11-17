@@ -167,7 +167,7 @@ namespace QuizUppgiften1
                 }
                 int points = ScoreManager.RegisterAnswer(currentPlayer, isCorrect, question.Difficulty);
 
-                Console.WriteLine($"{currentPlayer.Name}, fick {points} poäng!");
+                Console.WriteLine($"{currentPlayer.Name}, fick {points} poäng denna runda!");
                 Console.WriteLine($"{currentPlayer.Name}s Totalpoäng: {currentPlayer.Score}");
 
                 RoundManager.NextPlayer(Players.Count);
@@ -181,12 +181,37 @@ namespace QuizUppgiften1
             }
             Console.WriteLine("========================================");
 
+            var winners = Players.Where(p => p.Score == Players.Max(x => x.Score)).ToList();
+
+            if (winners.Count == 1)
+            {
+                Console.WriteLine($"Vinnaren är {winners[0].Name}!");
+            }
+            else
+            {
+                var bestWinner = winners.OrderByDescending(p => p.CorrectAnswers).First(); //den med mest rätt poäng + svar vinner
+
+                var finalWinners = winners.Where(p => p.CorrectAnswers == bestWinner.CorrectAnswers); //hämtar alla med lika många rätt som första plats
+
+                if (finalWinners.Count() == 1)
+                    Console.WriteLine($"Vinnaren är {bestWinner.Name}");
+                else
+                {
+                    Console.WriteLine("Det blev oavgjort mellan:");
+
+                    foreach (Player player in finalWinners)
+                    {
+                        Console.WriteLine(player.Name);
+                    }
+                    Console.WriteLine("========================================");
+                }
+
+            }
+
             foreach (Player player in Players)
             {
                 LeaderboardManager.SaveResult(player);
             }
-
-            Console.WriteLine("Resultaten har sparats på topplistan!");
 
         }
 
